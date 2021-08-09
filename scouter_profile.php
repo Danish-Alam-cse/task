@@ -13,42 +13,68 @@ if(!isset($_SESSION['scout_login'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Displayer Profile</title>
+    <title>Scouter Profile</title>
 </head>
 <body>
+    <div class="row mt-4">
+        <div class="col-lg-5 mx-auto">
 
-    <h1>Scouter Profile</h1>
+        
+    
+    
+    <div class="card">
+        <div class="card-header">
+        <div class="card-title text-center"><h3>Scouter Profile</h3></div></div>
+                         <div class="card-body">
 
     <table class="table">
-                      <tr>
-                          <th>Displayer id</th>
-                          <th>Company Name</th>
-                          <th>Date of Registration</th>
-                          <th>Country of origin</th>
-                          <th>Email</th>
-                          <th>Technology name</th>
-                          <th>Action</th>
-                      </tr>
+
+                    
+
+                         
+                     
                       <?php
                       $log = $_SESSION['scout_login'];
                       
                       $calling = mysqli_query($con,"select * from scouter where email='$log'");
                       while($row = mysqli_fetch_array($calling)):
                       ?>
-                      <tr>
-                          <th><?= $row['displayer_id'];?></th>
-                          <th><?= $row['company_name'];?></th>
-                          <th><?= $row['dor'];?></th>
-                          <th><?= $row['coo'];?></th>
-                          <th><?= $row['email'];?></th>
-                          <th><?= $row['technology_name'];?></th>
-                          
-                          <th>
-                              
-                          </th>
+                       <tr>
+                          <th>Scouter id</th>
+                          <th><?= $row['scouter_id'];?></th>
                       </tr>
+                      <tr>
+                          <th>Company Name</th>
+                          <th><?= $row['company_name'];?></th>
+
+                      </tr>
+                      <tr>
+                          <th>Date of Registration</th>
+                          <th><?= $row['dor'];?></th>
+                      </tr>
+
+                      <tr>
+                          <th>Country of origin</th>
+                          <th><?= $row['coo'];?></th>
+                      </tr>
+                      <tr>
+                          <th>Email</th>
+                          <th><?= $row['email'];?></th>
+                      </tr>
+
+                      <tr>
+                          <th>Technology name</th>
+                          <th><?= $row['Technology_name'];?></th>
+                          
+                          
+                      </tr>
+                   
                       <?php endwhile;?>
                   </table>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
     
     
 </body>

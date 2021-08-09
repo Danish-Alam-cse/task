@@ -1,4 +1,6 @@
-<?php require('config.php');?>
+<?php require('config.php');
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +13,21 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-    <a href="" class="navbar-brand">BGI</a>
+    <div class="container">
+    <a href="" class="navbar-brand">GBI</a>
 
     <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a href="" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="scouter_logout.php" class="nav-link">Logout</a></li>
+    <?php if(isset($_SESSION['scout_login'])):?>
+    
+    <li class="nav-item"><a href="scouter_logout.php" class="nav-link">Logout</a></li>
+    
+    <?php else:?>
+        <li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+    <li class="nav-item"><a href="scouter_signup.php" class="nav-link">Signup</a></li>
+    <?php endif;?>
     </ul>
+    </div>
+   
 </nav>
 
     

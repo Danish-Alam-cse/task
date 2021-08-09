@@ -17,6 +17,12 @@
         <div class="card">
             <div class="card-header">
                 <h3>Displayer Login</h3>
+                <p class="bg-success text-light px-4"><?php if(isset($_SESSION['msg'])){
+                    echo $_SESSION['msg'];
+                } else{
+                    echo $_SESSION['msg'] = "";
+                }
+                 ?></p>
             </div>
             <div class="card-body">
             <form action="" method="post">
@@ -31,8 +37,8 @@
                 </div>
                 <div class="mb-2">
                    
-                    <input type="submit" name="login" value="Login" class="btn btn-success btn-block">
-                    <br><a href="">Forget Password</a>
+                    <input type="submit" name="login" value="Login" class="btn form-control btn-success btn-block">
+                    <br><a href="displayer_reset.php">Forget Password</a>
                 </div>
 
             </form>
@@ -52,16 +58,17 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         
-        $check = mysqli_query($con,"SELECT * from displayer where email ='$email' AND password='$password'");
+        $check = mysqli_query($con,"SELECT * from displayer where(email ='$email'
+         AND password='$password')  AND status='active'");
         
-        $count = mysqli_num_rows($check);
+        $count = mysqli_fetch_assoc($check);
         
         if($count > 0){
             $_SESSION['display_login'] = $email;
             redirect('displayer_profile');
         }
         else{
-            echo "<script>alert('username and password is incorrect please try again')</script>";
+            echo "<script>alert('username or password is incorrect please try again')</script>";
         }
     }
     

@@ -1,5 +1,8 @@
 
-<?php require('nav.php');?>
+<?php require('nav.php');
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +71,7 @@
                     <div class="col-6">
                     <div class="mb-2">
                     <label for="">Confirm Password</label>
-                    <input type="text" name="cpassword" class="form-control">
+                    <input type="password" name="cpassword" class="form-control">
                 </div>
                     </div>
                 </div>
@@ -77,7 +80,7 @@
                     <div class="col-12">
                     <div class="mb-2">
                     
-                    <input type="submit" name="register" value="Register" class="btn btn-success btn-block">
+                    <input type="submit" name="register" value="Register" class="btn form-control btn-success btn-block">
                 </div>
                     </div>
                 </div>
@@ -120,7 +123,19 @@ if(isset($_POST['register'])){
         values ('$company_name','$dor','$technology_name','$coo','$email','$password','$token','inactive')");
 
 if($q){
-    echo "Registration successfull";
+    
+        
+        $subject = "Email Activation";
+        $body = "Hi, $email Click here to activate your account
+         http://localhost/task/display_active.php?token=$token";
+        $headers = "From: danishalam002@gmail.com";
+
+        if (mail($email, $subject, $body, $headers)) {
+            $_SESSION['msg'] = "check your mail to activte your account $email";
+            redirect('displayer_login');
+        } else {
+            echo "Email sending failed...";
+        }
 }
 else{
     echo "<script>alert('not created')</script>";

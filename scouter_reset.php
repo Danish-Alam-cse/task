@@ -19,7 +19,7 @@
         <div class="col-lg-5 mx-auto">
             <div class="card">
                 <div class="text-center card-header">
-                    <h3>Displayer Registration</h3>
+                    <h3>Recover Scouter Account</h3>
                 </div>
                  <div class="card-body">
         
@@ -27,21 +27,13 @@
             <form action="" method="post">
               
                 <div class="mb-2">
-                    <label for="">Password</label>
-                    <input type="password" name="password" class="form-control">
+                    <label for="">Email</label>
+                    <input type="email" name="email" class="form-control">
                 </div>
                     
-                    
-                <div class="mb-2">
-                    <label for="">Confirm Password</label>
-                    <input type="text" name="cpassword" class="form-control">
-                </div>
-                    
-                
-                
                 <div class="mb-2">
                     
-                    <input type="submit" name="register" value="Register" class="btn btn-success form-control btn-block">
+                    <input type="submit" name="forget" value="Send Mail" class="btn btn-success form-control btn-block">
                 </div>
                 
 
@@ -57,25 +49,37 @@
 
 
 <?php
-if(isset($_POST['register'])):
-    
-    $password  = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
-    
-    
-if($password == $cpassword){
-$query = mysqli_query($con,"INSERT INTO scouter (password) value ('$password')");
+if(isset($_POST['forget'])){
+  
+    $email  = $_POST['email'];
 
-if($query){
-    echo "data sent successfully";
+    $emailquery = "select * from scouter where email='$email'";
+    $query = mysqli_query($con,$emailquery);
+    $emailcount = mysqli_num_rows($query);
+    $record = mysqli_fetch_array($query);
+    
+    
+
+    if($emailcount){
+       $subject = "Password Reset";
+       $token = $record['token'];
+        $body = "Hi, $email Click here to Recover  your password
+         http://localhost/task/scouter_resetpassword.php?token=$token";
+        $headers = "From: danishalam002@gmail.com";
+
+        if (mail($email, $subject, $body, $headers)) {
+            $_SESSION['msg'] = "check your mail Reset your password $email";
+            redirect('scouter_login');
+        } else {
+            echo "Email sending failed...";
+        }
 }
-else{
-    echo "<script>alert('not created')</script>";
-}
-}
-else{
-        echo "password doest not matched";
+    else{
+        echo "No email found";
     }
+}
 
-endif;
+
+ 
+
 ?>
